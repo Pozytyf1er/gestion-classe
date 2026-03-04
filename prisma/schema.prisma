@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Class {
+  id        Int      @id @default(autoincrement())
+  name      String
+  level     String
+  year      Int
+  students  Student[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("classes")
+}
+
+model Student {
+  id           Int        @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String?     @unique
+  dateOfBirth  DateTime?
+  gender       String?
+  classId      Int
+  class        Class      @relation(fields: [classId], references: [id])
+  attendances Attendance[]
+  grades       Grade[]
+  observations Observation[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  @@map("students")
+}
+model Attendance {
+  id          Int      @id @default(autoincrement())
+  studentId    Int
+  student      Student @relation(fields: [studentId], references: [id])
+  date         DateTime
+  status       AttendanceStatus
+  reason       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@map("attendances")
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  JUSTIFIED
+}
+
+model Grade {
+  id          Int     @id @default(autoincrement())
+  studentId    Int
+  student      Student @relation(fields: [studentId], references: [id])
+  subject      String
+  type         GradeType
+  value       Float
+  coefficient  Float    @default(1)
+  date         DateTime
+  period       Period    @default(MONTHLY)
+  comment      String?
+  createdAt    DateTime @@default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@map("grades")
+}
+
+enum GradeType {
+  DETWORK
+  PARTICIPATION
+  QUIR
+  ORAL
+  PROJECT
+}
+
+enum Period {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+model Observation {
+  id         Int     @id @default(autoincrement())
+  studentId   Int
+  student     Student @relation(fields: [studentId], references: [id])
+  content     String
+  category    ObservationCategory
+  date       DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("observations")
+}
+
+enum ObservationCategory {
+  GENERAL
+  BEHAVIOR
+  ACADEMIC
+  SOCIAL
+  OTHER
+}
