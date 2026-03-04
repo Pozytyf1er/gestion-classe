@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -9,7 +11,7 @@
     "decorators": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isOlatedModules": true,
+    "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -18,12 +20,30 @@
       }
     ],
     "paths": {
-      "@c/*": ["./components/ui/*"],
-      "@lib/*": ["./lib/*"],
-      "@app/*": ["./app/*"],
-      "@types/*": ["./types/*"]
+      "@c/*": [
+        "./components/ui/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ],
+      "@app/*": [
+        "./app/*"
+      ],
+      "@types": [
+        "./types/index.d.ts"
+      ],
+      "@types/*": [
+        "./types/*.d.ts"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./next.env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "./next.env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
