@@ -12,11 +12,11 @@ export async function createStudent(data: StudentFormData) {
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
       },
     });
-    redirect('/eleves');
   } catch (error) {
     console.error('Error creating student:', error);
     throw error;
   }
+  redirect('/eleves');
 }
 
 export async function updateStudent(id: number, data: StudentFormData) {
@@ -28,11 +28,11 @@ export async function updateStudent(id: number, data: StudentFormData) {
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
       },
     });
-    redirect('/eleves');
   } catch (error) {
     console.error('Error updating student:', error);
     throw error;
   }
+  redirect('/eleves');
 }
 
 export async function deleteStudent(id: number) {
@@ -40,9 +40,9 @@ export async function deleteStudent(id: number) {
     await prisma.student.delete({
       where: { id },
     });
-    redirect('/eleves');
   } catch (error) {
     console.error('Error deleting student:', error);
     throw error;
   }
+  redirect('/eleves');
 }
